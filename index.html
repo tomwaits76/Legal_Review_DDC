@@ -874,6 +874,352 @@ section p { margin-bottom: 0.8em; }
 .fw-500 { font-weight: 500; }
 
 /* ============ Responsive ============ */
+/* ============ Timeline (Ⅱ장) ============ */
+.timeline-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  padding: 0.8rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  margin: 1rem 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.legend-marker {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  flex: 0 0 auto;
+}
+.legend-marker.favorable { background: var(--strong-border); }
+.legend-marker.neutral { background: var(--text-muted); }
+.legend-marker.warning { background: var(--weak-border); }
+.legend-marker.pivotal {
+  background: var(--accent);
+  width: 14px;
+  height: 14px;
+  box-shadow: 0 0 0 2px var(--accent-light);
+}
+
+.timeline-filters {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  padding: 0.9rem 1.1rem;
+  margin: 1rem 0;
+}
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.55rem;
+  flex-wrap: wrap;
+}
+.filter-group:last-of-type { margin-bottom: 0; }
+.filter-label {
+  flex: 0 0 70px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.filter-btn {
+  padding: 4px 11px;
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+.filter-btn:hover { background: var(--border-soft); color: var(--text); }
+.filter-btn.active {
+  background: var(--accent);
+  color: white;
+}
+.filter-status {
+  margin-top: 0.7rem;
+  padding-top: 0.55rem;
+  border-top: 1px dashed var(--border-soft);
+  font-size: 11.5px;
+  color: var(--text-faint);
+  text-align: right;
+}
+
+.timeline-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+.action-btn {
+  padding: 4px 10px;
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border-radius: 5px;
+  font-size: 11.5px;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+.action-btn:hover { background: var(--border-soft); color: var(--text); }
+
+.timeline-container { margin-top: 1rem; }
+.timeline-container.empty::after {
+  content: '조건에 맞는 이벤트가 없습니다.';
+  display: block;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 13px;
+  background: var(--surface-2);
+  border-radius: 10px;
+}
+
+.phase-section {
+  margin-bottom: 1.4rem;
+}
+.phase-header {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: all 0.15s;
+  margin-bottom: 0.6rem;
+}
+.phase-header:hover { background: var(--surface-2); }
+.phase-header .phase-num {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--accent-light);
+  color: var(--good-text);
+}
+.phase-header .phase-title {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+.phase-header .phase-range {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+.phase-header .phase-count {
+  margin-left: auto;
+  font-size: 11.5px;
+  color: var(--text-faint);
+}
+.phase-header .phase-toggle {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: transform 0.2s;
+  font-size: 14px;
+}
+.phase-section.collapsed .phase-header .phase-toggle { transform: rotate(-90deg); }
+.phase-events { position: relative; padding-left: 1.8rem; }
+.phase-section.collapsed .phase-events { display: none; }
+.phase-events::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+
+.event-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.55rem;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+.event-card::before {
+  content: '';
+  position: absolute;
+  left: -1.55rem;
+  top: 1.15rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--surface);
+  background: var(--text-muted);
+  box-shadow: 0 0 0 1px var(--border);
+}
+.event-card.tag-favorable::before { background: var(--strong-border); }
+.event-card.tag-neutral::before { background: var(--text-muted); }
+.event-card.tag-warning::before { background: var(--weak-border); }
+.event-card.pivotal {
+  border-left: 3px solid var(--accent);
+  box-shadow: 0 1px 3px rgba(24, 95, 165, 0.08);
+}
+.event-card.pivotal::before {
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent-light);
+  left: -1.6rem;
+  top: 1.05rem;
+}
+.event-card:hover { border-color: var(--text-muted); }
+
+.event-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+.event-date {
+  flex: 0 0 auto;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 2px 8px;
+  background: var(--surface-2);
+  border-radius: 4px;
+  font-feature-settings: "tnum";
+  white-space: nowrap;
+}
+.event-card.pivotal .pivotal-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  background: var(--accent);
+  color: white;
+  border-radius: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.event-title {
+  flex: 1 1 100%;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text);
+  margin-top: 0.3rem;
+  line-height: 1.5;
+}
+.event-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+}
+.event-evidences {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+.event-evidences .evidence-chip {
+  display: inline-block;
+  background: var(--strong-bg);
+  color: var(--strong-text);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: help;
+  border: 1px solid transparent;
+}
+.event-evidences .evidence-chip:hover { border-color: var(--strong-border); }
+
+.event-tag {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.event-tag.favorable { background: var(--strong-bg); color: var(--strong-text); }
+.event-tag.neutral { background: var(--mid-bg); color: var(--mid-text); }
+.event-tag.warning { background: var(--weak-bg); color: var(--weak-text); }
+
+.event-charge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+.event-charge:hover { filter: brightness(0.95); text-decoration: none; }
+.event-charge.special-fraud { background: var(--crit-bg); color: var(--crit-text); }
+.event-charge.document-forgery { background: var(--weak-bg); color: var(--weak-text); }
+.event-charge.freelancer-fraud { background: var(--coral-soft); color: #4A1B0C; }
+.event-charge.motive { background: var(--good-bg); color: var(--good-text); }
+
+.event-expand {
+  display: none;
+  margin-top: 0.7rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed var(--border-soft);
+}
+.event-card.expanded .event-expand { display: block; }
+.event-card .expand-indicator {
+  font-size: 11px;
+  color: var(--text-faint);
+  margin-top: 0.45rem;
+  text-align: right;
+}
+.event-card.expanded .expand-indicator { display: none; }
+
+.event-expand-section { margin-bottom: 0.7rem; }
+.event-expand-section:last-child { margin-bottom: 0; }
+.event-expand-title {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.event-expand-body {
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--text);
+}
+.event-jump-link {
+  display: inline-block;
+  font-size: 11.5px;
+  color: var(--accent);
+  cursor: pointer;
+  margin-top: 0.2rem;
+  padding: 3px 9px;
+  background: var(--accent-light);
+  border-radius: 4px;
+  font-weight: 500;
+}
+.event-jump-link:hover { background: var(--good-bg); text-decoration: none; }
+
 @media (max-width: 900px) {
   .app { grid-template-columns: 1fr; }
   .sidebar { position: static; height: auto; }
@@ -884,6 +1230,11 @@ section p { margin-bottom: 0.8em; }
   .matrix .cell { padding: 0.55rem 0.65rem; }
   .matrix .cell .layer-title { font-size: 12.5px; }
   .matrix .cell .layer-sub { font-size: 10.5px; }
+  .filter-group { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  .filter-label { flex: 0 0 auto; }
+  .phase-events { padding-left: 1.3rem; }
+  .event-card::before { left: -1.1rem; }
+  .event-card.pivotal::before { left: -1.15rem; }
 }
 
 /* Print */
@@ -891,7 +1242,8 @@ section p { margin-bottom: 0.8em; }
   .sidebar { display: none; }
   .app { grid-template-columns: 1fr; }
   .main { padding: 1rem; max-width: none; }
-  .qa-answer, .expand-detail, .coverage-detail { display: block !important; }
+  .qa-answer, .expand-detail, .coverage-detail, .event-expand { display: block !important; }
+  .phase-section.collapsed .phase-events { display: block !important; }
   .qa-answer-wrap.hidden .qa-answer-body,
   .qa-answer-wrap.hidden .qa-frame { filter: none !important; }
 }
@@ -917,13 +1269,14 @@ section p { margin-bottom: 0.8em; }
   <div class="nav-group-title">목차</div>
   <nav>
     <div class="nav-item" data-target="sec-overview"><span class="num">Ⅰ.</span><span>사건 개요 및 절차 현황</span></div>
-    <div class="nav-item" data-target="sec-charges"><span class="num">Ⅱ.</span><span>3개 고소 혐의 구조</span></div>
-    <div class="nav-item" data-target="sec-defense"><span class="num">Ⅲ.</span><span>쟁점별 방어 논리</span></div>
-    <div class="nav-item" data-target="sec-evidence"><span class="num">Ⅳ.</span><span>증거 커버리지 분석</span></div>
-    <div class="nav-item" data-target="sec-urgent"><span class="num">Ⅴ.</span><span>긴급 확보 자료 리스트</span></div>
-    <div class="nav-item" data-target="sec-checklist"><span class="num">Ⅵ.</span><span>조사 당일 체크리스트</span></div>
-    <div class="nav-item" data-target="sec-qa"><span class="num">Ⅶ.</span><span>예상 질문·답변</span></div>
-    <div class="nav-item" data-target="sec-final"><span class="num">Ⅷ.</span><span>종합 평가</span></div>
+    <div class="nav-item" data-target="sec-timeline"><span class="num">Ⅱ.</span><span>시간순 사건 일지</span></div>
+    <div class="nav-item" data-target="sec-charges"><span class="num">Ⅲ.</span><span>3개 고소 혐의 구조</span></div>
+    <div class="nav-item" data-target="sec-defense"><span class="num">Ⅳ.</span><span>쟁점별 방어 논리</span></div>
+    <div class="nav-item" data-target="sec-evidence"><span class="num">Ⅴ.</span><span>증거 커버리지 분석</span></div>
+    <div class="nav-item" data-target="sec-urgent"><span class="num">Ⅵ.</span><span>긴급 확보 자료 리스트</span></div>
+    <div class="nav-item" data-target="sec-checklist"><span class="num">Ⅶ.</span><span>조사 당일 체크리스트</span></div>
+    <div class="nav-item" data-target="sec-qa"><span class="num">Ⅷ.</span><span>예상 질문·답변</span></div>
+    <div class="nav-item" data-target="sec-final"><span class="num">Ⅸ.</span><span>종합 평가</span></div>
   </nav>
 
   <div class="sidebar-footer">
@@ -1019,9 +1372,71 @@ section p { margin-bottom: 0.8em; }
   </div>
 </section>
 
-<!-- ================ Ⅱ. 3개 고소 혐의 ================ -->
+<!-- ================ Ⅱ. 시간순 사건 일지 ================ -->
+<section id="sec-timeline">
+  <h2><span class="chap">Ⅱ</span>시간순 사건 일지</h2>
+
+  <p>2024년 1월 사업 결정부터 2025년 9월 관련 사건 불송치 결정까지 전 기간의 주요 이벤트를 시간순으로 정리한 것이다. 경찰에 제출된 의견서 사건 일지(29개 항목)와 2026. 4. 20. 최종 업데이트 사건 일지(41개 항목)를 교차 검토하여 <strong>총 49개 이벤트</strong>로 통합하고, 의견서의 증거 매핑을 전 기간으로 확장 적용하였다.</p>
+
+  <div class="callout neutral">
+    <span class="lead">사용 안내</span>
+    각 이벤트는 <strong>5개 국면</strong>으로 분류되며, 이벤트 카드를 클릭하면 방어상 의미와 관련 방어논리를 확인할 수 있다. 증거 칩에 마우스를 올리면 증거 요약이 표시된다. 상단 필터로 국면·태그·혐의별 이벤트를 선별할 수 있다.
+  </div>
+
+  <div class="timeline-legend">
+    <div class="legend-item"><span class="legend-marker favorable"></span><span>유리 — 방어에 적극 활용</span></div>
+    <div class="legend-item"><span class="legend-marker neutral"></span><span>중립 — 기본 사실 확인</span></div>
+    <div class="legend-item"><span class="legend-marker warning"></span><span>주의 — 검사 공격 예상 지점</span></div>
+    <div class="legend-item"><span class="legend-marker pivotal"></span><span>★ 주요 분기점</span></div>
+  </div>
+
+  <div class="timeline-filters">
+    <div class="filter-group">
+      <div class="filter-label">국면</div>
+      <div class="filter-buttons" data-filter-type="phase">
+        <button class="filter-btn active" data-filter="all">전체</button>
+        <button class="filter-btn" data-filter="background">배경·설립</button>
+        <button class="filter-btn" data-filter="warning-phase">위기 전조</button>
+        <button class="filter-btn" data-filter="decision">결단·실행</button>
+        <button class="filter-btn" data-filter="obstruction">방해 본격화</button>
+        <button class="filter-btn" data-filter="dispute">분쟁 단계</button>
+      </div>
+    </div>
+    <div class="filter-group">
+      <div class="filter-label">태그</div>
+      <div class="filter-buttons" data-filter-type="tag">
+        <button class="filter-btn active" data-filter="all">전체</button>
+        <button class="filter-btn" data-filter="favorable">유리</button>
+        <button class="filter-btn" data-filter="neutral">중립</button>
+        <button class="filter-btn" data-filter="warning">주의</button>
+      </div>
+    </div>
+    <div class="filter-group">
+      <div class="filter-label">관련 혐의</div>
+      <div class="filter-buttons" data-filter-type="charge">
+        <button class="filter-btn active" data-filter="all">전체</button>
+        <button class="filter-btn" data-filter="special-fraud">특경사기</button>
+        <button class="filter-btn" data-filter="document-forgery">사문서위조</button>
+        <button class="filter-btn" data-filter="freelancer-fraud">프리랜서사기</button>
+        <button class="filter-btn" data-filter="motive">고소 동기 탄핵</button>
+      </div>
+    </div>
+    <div class="filter-status" id="timeline-status">전체 49개 이벤트 표시 중</div>
+  </div>
+
+  <div class="timeline-actions">
+    <button class="action-btn" onclick="expandAllPhases()">모두 펼치기</button>
+    <button class="action-btn" onclick="collapseAllPhases()">모두 접기</button>
+  </div>
+
+  <div class="timeline-container" id="timeline-container">
+    <!-- Injected by JS -->
+  </div>
+</section>
+
+<!-- ================ Ⅲ. 3개 고소 혐의 ================ -->
 <section id="sec-charges">
-  <h2><span class="chap">Ⅱ</span>3개 고소 혐의 구조</h2>
+  <h2><span class="chap">Ⅲ</span>3개 고소 혐의 구조</h2>
 
   <p>변영성과 프리랜서들이 병합 고소한 3개 혐의는 죄질·형량 부담이 상이하다. 특경사기가 주된 혐의이며 형량 부담도 가장 크다. <strong>각 카드를 클릭하면 상세한 공소사실 및 배경 정보를 확인</strong>할 수 있다.</p>
 
@@ -1059,7 +1474,7 @@ section p { margin-bottom: 0.8em; }
 
 <!-- ================ Ⅲ. 방어논리 매트릭스 ================ -->
 <section id="sec-defense">
-  <h2><span class="chap">Ⅲ</span>쟁점별 방어 논리 — 3×3 매트릭스</h2>
+  <h2><span class="chap">Ⅳ</span>쟁점별 방어 논리 — 3×3 매트릭스</h2>
 
   <p>각 혐의에 대해 <strong>1차(구성요건 부정) → 2차(판례·법리 원용) → 3차(적용배제·양형)</strong> 순으로 방어를 쌓는 중첩 구조다. 한 방어선이 무너져도 다음 방어선이 받친다. <strong>각 셀을 클릭하면 상세 법리·판례 원문·관련 증거를 확인</strong>할 수 있다.</p>
 
@@ -1140,7 +1555,7 @@ section p { margin-bottom: 0.8em; }
 
 <!-- ================ Ⅳ. 증거 커버리지 ================ -->
 <section id="sec-evidence">
-  <h2><span class="chap">Ⅳ</span>증거 커버리지 및 취약점 분석</h2>
+  <h2><span class="chap">Ⅴ</span>증거 커버리지 및 취약점 분석</h2>
 
   <p>확보된 증거 37건의 실물 교차 검증을 완료한 결과, 방어 항목별 증거 충실도는 다음과 같다. <strong>각 행을 클릭하면 관련 증거 목록과 구체 보완 방법</strong>을 확인할 수 있다. 색상이 강할수록 긴급 대응이 필요한 항목이다.</p>
 
@@ -1205,7 +1620,7 @@ section p { margin-bottom: 0.8em; }
 
 <!-- ================ Ⅴ. 긴급 확보 자료 ================ -->
 <section id="sec-urgent">
-  <h2><span class="chap">Ⅴ</span>긴급 확보 자료 리스트</h2>
+  <h2><span class="chap">Ⅵ</span>긴급 확보 자료 리스트</h2>
 
   <p>검찰 출석조사 이전 기일별 실행 과제다. <strong>P1은 조사 3일 전까지, P2는 조사 7일 전까지, P3는 조사 전까지</strong> 완료 목표로 진행한다. 각 항목을 클릭하면 구체적 실행 방법과 획득 경로를 확인할 수 있다. 체크 상태는 자동 저장된다.</p>
 
@@ -1216,7 +1631,7 @@ section p { margin-bottom: 0.8em; }
 
 <!-- ================ Ⅵ. 조사 당일 체크리스트 ================ -->
 <section id="sec-checklist">
-  <h2><span class="chap">Ⅵ</span>조사 당일 체크리스트</h2>
+  <h2><span class="chap">Ⅶ</span>조사 당일 체크리스트</h2>
 
   <p>검찰 출석 조사는 법정 진술과 사실상 동일한 무게를 가진다. 기본 원칙은 <strong>경찰 진술과의 일관성 유지</strong>, <strong>불확실한 사항에 대한 단정적 답변 회피</strong>, <strong>모든 진술의 법리적 함의 검토</strong>이다.</p>
 
@@ -1271,7 +1686,7 @@ section p { margin-bottom: 0.8em; }
 
 <!-- ================ Ⅶ. Q&A 시뮬레이션 ================ -->
 <section id="sec-qa">
-  <h2><span class="chap">Ⅶ</span>예상 질문·답변 시뮬레이션</h2>
+  <h2><span class="chap">Ⅷ</span>예상 질문·답변 시뮬레이션</h2>
 
   <p>검사가 던질 가능성이 가장 높은 7개 질문을 선별하였다. 각 질문은 <strong>질문의 배경 · 함정 포인트 · 권장 답변 · 답변 프레임</strong>의 4부 구조다.</p>
 
@@ -1288,7 +1703,7 @@ section p { margin-bottom: 0.8em; }
 
 <!-- ================ Ⅷ. 종합 평가 ================ -->
 <section id="sec-final">
-  <h2><span class="chap">Ⅷ</span>종합 평가</h2>
+  <h2><span class="chap">Ⅸ</span>종합 평가</h2>
 
   <h3>1. 불기소 가능성 종합 전망</h3>
 
@@ -1851,6 +2266,306 @@ const qaData = [
   }
 ];
 
+// ============================================================
+// 시간순 사건 일지 데이터 (49개 이벤트)
+// ============================================================
+
+const phaseData = {
+  'background':       { num: '①', title: '배경·설립', range: '2024. 1월 ~ 10. 11.',   defaultOpen: false },
+  'warning-phase':    { num: '②', title: '위기 전조', range: '2024. 10. 11. ~ 11. 30.', defaultOpen: false },
+  'decision':         { num: '③', title: '결단·실행', range: '2024. 12. 2. ~ 12. 13.',  defaultOpen: true },
+  'obstruction':      { num: '④', title: '방해 본격화', range: '2024. 12. 19. ~ 12. 31.', defaultOpen: true },
+  'dispute':          { num: '⑤', title: '분쟁 단계', range: '2025. 1. 3. ~ 9. 9.',     defaultOpen: false }
+};
+
+const timelineEvents = [
+  // 국면 1: 배경·설립 (1~14)
+  { id: 'ev-01', date: '2024. 1월', dateSort: '20240101', phase: 'background',
+    title: '연호송라개발 내부적으로 지역주택조합 방식 사업 진행 결정',
+    evidences: [], tag: 'neutral', charges: [],
+    significance: '사업의 출발점. 이후 방향 전환(임대주택)과 대비되어 사업 경위의 불가피성을 뒷받침.',
+    pivotal: false },
+  { id: 'ev-02', date: '2024. 2월 ~ 4월', dateSort: '20240201', phase: 'background',
+    title: '변영성·정성한 주도로 지역주택조합 추진위원회 설립 협의',
+    evidences: [], tag: 'neutral', charges: [],
+    significance: '변영성이 사업의 주도자였음을 보여주는 초기 정황. 변영성 본인이 조합사업 전문가(정성한)를 동원.',
+    pivotal: false },
+  { id: 'ev-03', date: '2024. 4. 23.', dateSort: '20240423', phase: 'background',
+    title: '에스에이치그룹㈜ PM용역계약(안) 제안',
+    evidences: ['1'], tag: 'neutral', charges: [],
+    significance: '변영성 추천 업체(정성한 대표). 이후 분쟁의 인적 구도 형성.',
+    pivotal: false },
+  { id: 'ev-04', date: '2024. 5월', dateSort: '20240501', phase: 'background',
+    title: 'PM사 현장 투입 및 업무 개시',
+    evidences: [], tag: 'neutral', charges: [],
+    significance: '사업 실행의 개시 시점.',
+    pivotal: false },
+  { id: 'ev-05', date: '2024. 5. 13.', dateSort: '20240513', phase: 'background',
+    title: '지행역연호지역주택조합추진위원회 설립 (위원장 변영성) · 위원회 인장 연호송라개발 보관 관리',
+    evidences: ['2', '3'], tag: 'favorable', charges: ['document-forgery'],
+    significance: '사문서위조 방어의 시원적 사실 — 발기인 사실확인서(증거3)가 "2024년 5월 최초 설립시부터 연호송라개발이 보관·관리"를 명기함.',
+    pivotal: false },
+  { id: 'ev-06', date: '2024. 5. 20.', dateSort: '20240520', phase: 'background',
+    title: '연호송라개발이 추진위원회에 토지사용 승낙',
+    evidences: ['4'], tag: 'neutral', charges: [],
+    significance: '사업 전제 요건 확보.',
+    pivotal: false },
+  { id: 'ev-07', date: '2024. 5. 21. ~ 11. 15.', dateSort: '20240521', phase: 'background',
+    title: '연호송라개발이 추진위원회에 총 720,169,000원 대여 (차용증 제5조 직인변경 기한이익 상실 특약)',
+    evidences: ['5'], tag: 'favorable', charges: ['document-forgery'],
+    significance: '사문서위조 1차 방어의 핵심 계약적 근거. 직인에 대한 연호송라개발의 간섭권이 명문화됨. 실질적 사업비 부담자는 연호송라개발임을 입증.',
+    pivotal: true },
+  { id: 'ev-08', date: '2024. 5. 31.', dateSort: '20240531', phase: 'background',
+    title: 'PM사 정성한·변영성이 추천한 ㈜네옴씨티개발과 조합원 모집대행 계약',
+    evidences: ['6'], tag: 'neutral', charges: [],
+    significance: '변영성-정성한 개인적 친분 기반 업체 선정. 이후 네옴씨티 대표 이승학과 정성한의 법인 관계 드러남.',
+    pivotal: false },
+  { id: 'ev-09', date: '2024. 7. 29.', dateSort: '20240729', phase: 'background',
+    title: '지역주택조합 조합원모집신고 반려 처리',
+    evidences: ['7'], tag: 'neutral', charges: [],
+    significance: '사업 방향 전환의 계기. 이후 임대주택사업으로 전환되는 불가피한 사정.',
+    pivotal: false },
+  { id: 'ev-10', date: '2024. 9. 13.', dateSort: '20240913', phase: 'background',
+    title: '홍보관 준공서류에 변영성이 <strong>개인도장</strong>으로 서명·날인하여 인수인계',
+    evidences: ['8'], tag: 'warning', charges: ['document-forgery'],
+    significance: '역설적으로 방어적 가치도 있음 — 변영성 본인도 이담시티 관련 문서에 본인 개인도장을 사용하였다는 정황. 인장 관리의 엄격성이 확립되지 않았음을 보여줌.',
+    pivotal: false },
+  { id: 'ev-11', date: '2024. 9. 19.', dateSort: '20240919', phase: 'background',
+    title: '이담시티 입주위원회 규약 제정',
+    evidences: ['9'], tag: 'neutral', charges: [],
+    significance: '이후 총회·이사회 소집·의결 절차의 준거 규약. 제24조 제2항(이해관계 이사의 의결 배제)은 11. 30. 긴급이사회에서 변영성 배제의 근거가 됨.',
+    pivotal: false },
+  { id: 'ev-12', date: '2024. 9. 23.', dateSort: '20240923', phase: 'background',
+    title: '추진위 명칭을 이담시티입주위원회로 변경 + 3자 사업약정 체결 (이담시티·연호송라·티와이월드)',
+    evidences: ['10', '11'], tag: 'favorable', charges: ['special-fraud'],
+    significance: '사업약정서 제4조 제2항 제7호·제8호에 연호송라개발의 "출자금 및 사업비 집행에 관한 일체 업무, 신탁회사 업무지원" 명시. 자금집행 요청의 권한 근거.',
+    pivotal: true },
+  { id: 'ev-13', date: '2024. 9. 27.', dateSort: '20240927', phase: 'background',
+    title: '사업약정 및 자금관리 대리사무계약 체결 (무궁화신탁 포함 4자)',
+    evidences: ['12'], tag: 'favorable', charges: ['special-fraud'],
+    significance: '무궁화신탁이 자금관리대리사무 수탁자로 편입. 제12조 제2항에 자금인출 요건 규정. 이후 신탁사의 심사 의무 논거의 계약적 출발점.',
+    pivotal: false },
+  { id: 'ev-14', date: '2024. 10. 1.', dateSort: '20241001', phase: 'background',
+    title: '이담시티-㈜아티즌홀딩스 회원모집 대행 용역계약 체결 (동일자 홍보관 오픈 10. 11.)',
+    evidences: ['13'], tag: 'favorable', charges: ['special-fraud'],
+    significance: '아티즌홀딩스의 모집대행수수료 청구권의 계약적 근거. 제7조 모집대행 수수료 조항은 수수료 청구의 정당성 입증 자료.',
+    pivotal: false },
+
+  // 국면 2: 위기 전조 (15~19)
+  { id: 'ev-15', date: '2024. 10. 11.', dateSort: '20241011', phase: 'warning-phase',
+    title: '아티즌홀딩스-㈜동방디앤씨 모집 대대행 계약 체결',
+    evidences: ['14'], tag: 'neutral', charges: [],
+    significance: '동방디앤씨는 변영성이 추천한 네옴씨티의 대대행사. 변영성의 사업 관여도를 보여주는 간접 증거.',
+    pivotal: false },
+  { id: 'ev-16', date: '2024. 11. 20.', dateSort: '20241120', phase: 'warning-phase',
+    title: '변영성 위원장이 정주환 대표에게 전화로 금전 요구 (1,500만 ~ 2,000만원 대여)',
+    evidences: ['15'], tag: 'favorable', charges: ['motive'],
+    significance: '고소 동기 탄핵의 핵심 정황. 변영성이 먼저 금전 요구를 개시하였고 이것이 거절되자 이후 사업 방해·고소로 이어짐. 녹취록으로 객관 증거 확보.',
+    pivotal: false },
+  { id: 'ev-17', date: '2024. 11. 26.', dateSort: '20241126', phase: 'warning-phase',
+    title: '변영성 위원장 홍보관 마지막 출근 + 재차 금전 요구 (카드론·캐피탈 사유)',
+    evidences: [], tag: 'favorable', charges: ['motive'],
+    significance: '배임·횡령 사건에서 "11. 27.부터 업무중단" 주장이 제기되었으나 이미 11. 26.이 마지막 출근. 사업 이탈의 자발성이 입증되는 시점.',
+    pivotal: false },
+  { id: 'ev-18', date: '2024. 11. 28.', dateSort: '20241128', phase: 'warning-phase',
+    title: '변영성의 금전 요구 + 위원장직 인수인계 언급',
+    evidences: ['16'], tag: 'favorable', charges: ['motive', 'document-forgery'],
+    significance: '사문서위조 방어에도 직접 연결 — 변영성 본인이 이미 위원장직 인수인계 의사를 명시적으로 표명. 12. 10. 공문 작성 시점의 "묵시적 위임" 법리의 토대.',
+    pivotal: false },
+  { id: 'ev-19', date: '2024. 11. 30.', dateSort: '20241130', phase: 'warning-phase',
+    title: '이담시티입주위원회 긴급이사회 개최 (1차 약정금 2,500만 → 500만+1개월내 잔여금 분할 결의, 공문 발송 위임)',
+    evidences: ['17', '18'], tag: 'favorable', charges: ['document-forgery', 'special-fraud'],
+    significance: '제4호 의안: 약정금 분할 구조. 제5호 의안: 연호송라개발에 공문 작성 권한 위임. 변영성은 규약 제24조 제2항(이해관계 배제)에 따라 미참석. 사문서위조 방어의 내부 의결 근거.',
+    pivotal: true },
+
+  // 국면 3: 결단·실행 (20~28)
+  { id: 'ev-20', date: '2024. 12. 2.', dateSort: '20241202', phase: 'decision',
+    title: '프리랜서 10명과 ㈜아티즌홀딩스 용역계약 체결 (월 지급일 익월 10일)',
+    evidences: ['19'], tag: 'favorable', charges: ['freelancer-fraud'],
+    significance: '프리랜서 사기 방어의 기준 시점. 대법원 87도1605 판결의 "계약 당시" 변제능력 판단 기준의 출발점. 익월 10일 지급 조건은 12. 31. 선지급의 자발성 입증 근거.',
+    pivotal: false },
+  { id: 'ev-21', date: '2024. 12. 3.', dateSort: '20241203', phase: 'decision',
+    title: '㈜스타오토플러스 회원가입 계약 80건 체결 (신청금 4억 입금)',
+    evidences: ['20', '24'], tag: 'warning', charges: ['special-fraud'],
+    significance: '특경사기 공격의 핵심 지점. 검찰 시나리오상 "가장 계약 작출"로 평가될 수 있는 사건. 기숙사 수요·양수도 경제적 합리성·서**영과의 관계의 3각 방어 필요.',
+    pivotal: false },
+  { id: 'ev-22', date: '2024. 12. 6.', dateSort: '20241206', phase: 'decision',
+    title: '모집대행 수수료 회계처리 합의서 작성 (이담시티·아티즌·연호송라 3자)',
+    evidences: ['21'], tag: 'favorable', charges: ['special-fraud'],
+    significance: '수수료 산정·지급의 3자 합의 문서. 아티즌의 수수료 청구가 일방적이 아니라 관계 당사자 합의에 기초함을 입증.',
+    pivotal: false },
+  { id: 'ev-23', date: '2024. 12. 9.', dateSort: '20241209', phase: 'decision',
+    title: '회원가입계약 92건 확정 + 무궁화신탁에 8차 자금집행 요청 (수수료 5.39억 + 운영비 3천만 = 5.69억)',
+    evidences: ['22', '23', '24', '25'], tag: 'favorable', charges: ['special-fraud'],
+    significance: '특경사기 1차 방어의 핵심 시점. 증거22 포괄동의서의 "신탁사 판단의무 없음" 문구가 회원들 사전에 서명. 무궁화신탁은 92건의 실체성을 심사하여 집행 승인.',
+    pivotal: true },
+  { id: 'ev-24', date: '2024. 12. 10.', dateSort: '20241210', phase: 'decision',
+    title: '이사회 결의에 따른 위원회 공문 발송 (고소 대상 사문서)',
+    evidences: ['26'], tag: 'warning', charges: ['document-forgery'],
+    significance: '사문서위조 고소의 직접 대상. 연호송라개발이 이사회 결의 + 직인 관리권에 기초해 날인·발송. 방어 포인트: 명의자 묵시적 승낙(대법 87도2256)과 12. 31. 총회 소급 추인.',
+    pivotal: true },
+  { id: 'ev-25', date: '2024. 12. 11.', dateSort: '20241211', phase: 'decision',
+    title: '변영성이 정주환 대표에게 전화로 사직의사 표명 ("돈도 없고, 몸도 안좋아서 그만뒀으면 함")',
+    evidences: ['27'], tag: 'favorable', charges: ['motive'],
+    significance: '고소 동기 탄핵의 결정 시점 — 변영성 본인의 사임 의사 표시. 이후 사임 처리 전 고소에 이른 경위가 보복성을 시사.',
+    pivotal: false },
+  { id: 'ev-26', date: '2024. 12. 12.', dateSort: '20241212', phase: 'decision',
+    title: '홍보관 유치권 행사 (공사업체 하스산업개발 대표 안영진은 변영성의 후배)',
+    evidences: [], tag: 'favorable', charges: ['motive'],
+    significance: '변영성과 하스산업개발의 사적 관계 입증. 유치권 행사 시점이 변영성의 사임 의사 직후라는 시간적 근접성이 변영성의 사업 방해 의도를 강하게 시사.',
+    pivotal: false },
+  { id: 'ev-27', date: '2024. 12. 12.', dateSort: '20241212', phase: 'decision',
+    title: '8차 자금집행 사업비 출금 완료 (569,000,000원)',
+    evidences: ['28'], tag: 'favorable', charges: ['special-fraud'],
+    significance: '신탁사의 집행 승인 → 실제 집행 완료 사실. 무궁화신탁의 실질 심사 후 승인의 객관적 입증. 이후 반환 요구 부재 사실도 함께 중요.',
+    pivotal: false },
+  { id: 'ev-28', date: '2024. 12. 13.', dateSort: '20241213', phase: 'decision',
+    title: '스타오토플러스 → 아티즌홀딩스 회원가입권 양수도 + 4억원 양수도대금 반환',
+    evidences: ['29', '30'], tag: 'warning', charges: ['special-fraud'],
+    significance: '자금순환 프레임의 핵심 공격 지점. 방어: (1) 스타오토의 경제적 변심 입증, (2) 양수도의 위원회 공식 확인 날인, (3) 대표 서**영과 의뢰인의 관계 소명. 동일자 공사대금 지급 확약서도 별도 작성.',
+    pivotal: true },
+
+  // 국면 4: 방해 본격화 (29~36)
+  { id: 'ev-29', date: '2024. 12. 19.', dateSort: '20241219', phase: 'obstruction',
+    title: '무궁화신탁에 9차 자금집행 요청 (7,700만원) — 변영성 방해 요청으로 보류 처리',
+    evidences: ['31', '32'], tag: 'favorable', charges: ['freelancer-fraud'],
+    significance: '프리랜서 용역비 지급 불이행의 원인이 의뢰인의 편취 의사가 아닌 변영성의 외부적 방해 행위임을 객관적으로 입증하는 핵심 사실.',
+    pivotal: false },
+  { id: 'ev-30', date: '2024. 12. 19.', dateSort: '20241219', phase: 'obstruction',
+    title: '변영성-정일경 이사 전화통화 (월 400만원 요구, 공증 거부 조건)',
+    evidences: [], tag: 'favorable', charges: ['motive'],
+    significance: '변영성의 금전 요구 지속 + 사업 방해 수단화. 금전을 받지 않으면 공증 불가라는 조건부 방해 의사 표명.',
+    pivotal: false },
+  { id: 'ev-31', date: '2024. 12. 23.', dateSort: '20241223', phase: 'obstruction',
+    title: '사업약정 해지 알림 내용증명 발송 (연호송라 → 이담시티, 12. 27. 회신 기한)',
+    evidences: [], tag: 'favorable', charges: ['document-forgery'],
+    significance: '연호송라개발이 사업약정 위반을 공식화한 시점. 이후 임시총회의 위원장 변경·직인 재위임으로 이어지는 일련의 조치가 정당한 사업 복구 절차임을 입증.',
+    pivotal: false },
+  { id: 'ev-32', date: '2024. 12. 24.', dateSort: '20241224', phase: 'obstruction',
+    title: '변영성이 임의로 단체 도장 제작 · 무궁화신탁 방문하여 자금인출 방해 · 직인 변경 공문 발송',
+    evidences: ['33', '34'], tag: 'favorable', charges: ['freelancer-fraud', 'document-forgery'],
+    significance: '변영성의 불법 직인 임의 제작 + 신탁사 업무 직접 방해. 변영성의 사인장 위조 사건(동두천경찰서 2025. 1. 14. 고소)의 직접 근거가 되는 행위. 프리랜서 지급 불능의 직접 원인.',
+    pivotal: true },
+  { id: 'ev-33', date: '2024. 12. 25.', dateSort: '20241225', phase: 'obstruction',
+    title: '변영성 측 공문 발송 — 변영성이 임의 제작한 도장 최초 날인',
+    evidences: [], tag: 'favorable', charges: ['document-forgery'],
+    significance: '이사회 소집 요청에 대해 절차상 문제와 소집 주관자 부적절을 주장한 역공격. 그러나 위원회의 정당한 의사결정을 방해한 행위로 평가됨.',
+    pivotal: false },
+  { id: 'ev-34', date: '2024. 12. 31.', dateSort: '20241231', phase: 'obstruction',
+    title: 'KB국민은행 계좌: 프리랜서 9명에 8,707,000원 선지급 + "대여금" 명목 1천만원 출금',
+    evidences: ['30'], tag: 'warning', charges: ['freelancer-fraud', 'special-fraud'],
+    significance: '양가적 이벤트 — 프리랜서 측면: 지급기일(익월 10일) 전 자발적 선지급으로 편취 의사 부정의 결정적 증거. 특경사기 측면: 대여금 1천만원의 용처가 미해명 시 불법영득의사 추론의 단초.',
+    pivotal: false },
+  { id: 'ev-35', date: '2024. 12. 31.', dateSort: '20241231', phase: 'obstruction',
+    title: '이담시티입주위원회 임시총회 (재적 16명 만장일치 · 위원장 변영성 → 이성부 변경 · 직인관리 연호송라 위임 소급 적용)',
+    evidences: ['35'], tag: 'favorable', charges: ['document-forgery'],
+    significance: '사문서위조 2차 방어의 핵심 사실 — 단체 최상위 의결기관의 명시적·서면적 사후 추인. 제5호 안건의 "소급 적용" 문구가 종전 직인 관리 관계를 공식 인정.',
+    pivotal: true },
+  { id: 'ev-36', date: '2024. 12. 31.', dateSort: '20241231', phase: 'obstruction',
+    title: '단체 대표자 변경 고유번호 정정신고 (세무서에서 변영성이 대표자 변경 부정)',
+    evidences: [], tag: 'neutral', charges: [],
+    significance: '변영성의 사후적 변경 거부 행위. 규약상 총회 개최 시 법원의 허가가 필요하다는 거부 통지문(25. 1. 16.)으로 이어짐.',
+    pivotal: false },
+
+  // 국면 5: 분쟁 단계 (37~49)
+  { id: 'ev-37', date: '2025. 1. 3.', dateSort: '20250103', phase: 'dispute',
+    title: '사업약정 해지 최고(1차) 내용증명 발송',
+    evidences: [], tag: 'neutral', charges: [],
+    significance: '연호송라개발의 법적 대응 본격화. 25. 1. 10.까지 회신 기한.',
+    pivotal: false },
+  { id: 'ev-38', date: '2025. 1. 6.', dateSort: '20250106', phase: 'dispute',
+    title: '법인카드 사용금 반환 요청 내용증명 (연호송라 → 변영성)',
+    evidences: [], tag: 'favorable', charges: ['motive'],
+    significance: '변영성의 법인카드 사적 사용 주장 공식화. 이후 배임·횡령 고소(25. 1. 23.)와 연결.',
+    pivotal: false },
+  { id: 'ev-39', date: '2025. 1. 7.', dateSort: '20250107', phase: 'dispute',
+    title: '변영성이 회원들에게 문자 발송 — "신탁사에 요건 미비 출금이 확인됨"',
+    evidences: [], tag: 'warning', charges: ['special-fraud'],
+    significance: '변영성의 고소 전 사전 여론 조성 행위. 회원들에게 편취 프레임을 주입하려는 시도. 후에 본건 고소의 사전 행위로 평가 가능.',
+    pivotal: false },
+  { id: 'ev-40', date: '2025. 1. 8. ~ 13.', dateSort: '20250108', phase: 'dispute',
+    title: '사업약정 해지 최고(2차) 및 해지 확정 통지 내용증명',
+    evidences: [], tag: 'neutral', charges: [],
+    significance: '연호송라개발의 해지 절차 완료. 민사 분쟁의 외형적 틀 확립.',
+    pivotal: false },
+  { id: 'ev-41', date: '2025. 1. 14.', dateSort: '20250114', phase: 'dispute',
+    title: '이담시티 이사 김영민·고경곤이 동두천경찰서에 변영성 형사 고소 (사인장 위조·업무방해·허위사실유포)',
+    evidences: [], tag: 'favorable', charges: [],
+    significance: '본건 반대 방향 고소. 변영성의 12. 24. 직인 임의 제작·사용에 대한 형사 고소. 사인장위조 사건은 25. 9. 9. 불송치(증거불충분)로 귀결됨.',
+    pivotal: false },
+  { id: 'ev-42', date: '2025. 1. 20.', dateSort: '20250120', phase: 'dispute',
+    title: '프리랜서 김연찬이 중부지방고용노동청 의정부지청에 임금체불 진정',
+    evidences: [], tag: 'warning', charges: ['freelancer-fraud'],
+    significance: '프리랜서 사건의 최초 공식 신고. 본건 프리랜서 사기 고소는 노동청 내사종결(25. 3. 17.) 이후 전환된 것.',
+    pivotal: false },
+  { id: 'ev-43', date: '2025. 1. 23.', dateSort: '20250123', phase: 'dispute',
+    title: '연호송라개발이 수원중부경찰서에 변영성 형사 고소 (배임·횡령)',
+    evidences: [], tag: 'favorable', charges: [],
+    significance: '본건 반대 방향 고소 2차. 이후 25. 3. 27. 불송치(혐의없음)로 귀결.',
+    pivotal: false },
+  { id: 'ev-44', date: '2025. 2. 3.', dateSort: '20250203', phase: 'dispute',
+    title: '내용증명 발송 — 김영민 외 14인의 임원해임·임시총회 소집요구서',
+    evidences: ['36'], tag: 'neutral', charges: [],
+    significance: '위원회 내부의 정당한 의사결정 회복 절차 공식화.',
+    pivotal: false },
+  { id: 'ev-45', date: '2025. 3. 17.', dateSort: '20250317', phase: 'dispute',
+    title: '중부지방고용노동청 내사종결 (근로자성 증거 불충분, 신고인 김연찬)',
+    evidences: ['37'], tag: 'favorable', charges: ['freelancer-fraud'],
+    significance: '프리랜서 사기 방어의 핵심 증거. 동일 사실관계·당사자 집단에 대한 행정기관의 선행 종결 판단. 근로기준법상 사용자성 부정.',
+    pivotal: false },
+  { id: 'ev-46', date: '2025. 3. 27.', dateSort: '20250327', phase: 'dispute',
+    title: '변영성 배임·횡령 사건 수사결과 통지 (불송치·혐의없음 / 동두천경찰서 2024-002969 관련)',
+    evidences: [], tag: 'favorable', charges: ['motive'],
+    significance: '변영성 측의 반대 고소 기각. "11. 27.부터 업무중단" 주장 배척됨. 변영성의 주장 신빙성 약화.',
+    pivotal: false },
+  { id: 'ev-47', date: '2025. 7. 3.', dateSort: '20250703', phase: 'dispute',
+    title: '본건 사기·사문서위조 사건 수서경찰서 출석 조사 (의견서 제출)',
+    evidences: [], tag: 'neutral', charges: [],
+    significance: '본건 의뢰인 피의자 출석조사. 현재 프로젝트의 의견서가 이 시점 제출본.',
+    pivotal: false },
+  { id: 'ev-48', date: '2025. 8. 15.', dateSort: '20250815', phase: 'dispute',
+    title: '주택법 위반 사건 불송치 결정 (고발인 동두천시장, 동두천경찰서 2024-002969)',
+    evidences: [], tag: 'favorable', charges: ['special-fraud'],
+    significance: '관련 사건 불송치 1호. 본건 사업의 절차적 적법성이 행정·수사기관에서 인정된 간접 증거.',
+    pivotal: false },
+  { id: 'ev-49', date: '2025. 9. 9.', dateSort: '20250909', phase: 'dispute',
+    title: '사인장 위조·업무방해 사건 불송치 결정 (피고소인 변영성·신광현, 동두천경찰서 2025-000132)',
+    evidences: [], tag: 'favorable', charges: ['document-forgery'],
+    significance: '변영성의 12. 24. 직인 임의 제작 행위가 불송치되었으나, 본건 사문서위조 방어에서 여전히 변영성의 사업 방해 의사를 입증하는 간접 증거로 활용 가능.',
+    pivotal: false }
+];
+
+// 관련 방어논리 매핑 (이벤트 혐의 태그 클릭시 스크롤 대상)
+const chargeToDefense = {
+  'special-fraud': 'sf-1',
+  'document-forgery': 'df-1',
+  'freelancer-fraud': 'ff-1',
+  'motive': null
+};
+
+const chargeLabels = {
+  'special-fraud': '특경사기',
+  'document-forgery': '사문서위조',
+  'freelancer-fraud': '프리랜서사기',
+  'motive': '고소동기'
+};
+
+const tagLabels = {
+  'favorable': '유리',
+  'neutral': '중립',
+  'warning': '주의'
+};
+
+// 필터 상태
+let timelineFilters = {
+  phase: 'all',
+  tag: 'all',
+  charge: 'all'
+};
+
+// 국면 접힘 상태
+const phaseCollapsedState = {};
+
 /* ============================================================
    렌더링 함수
 ============================================================ */
@@ -2035,6 +2750,191 @@ function renderQA() {
   `).join('');
 }
 
+// 타임라인 렌더
+function renderTimeline() {
+  const container = document.getElementById('timeline-container');
+  const statusEl = document.getElementById('timeline-status');
+  if (!container) return;
+
+  // 필터 적용
+  const filtered = timelineEvents.filter(ev => {
+    if (timelineFilters.phase !== 'all' && ev.phase !== timelineFilters.phase) return false;
+    if (timelineFilters.tag !== 'all' && ev.tag !== timelineFilters.tag) return false;
+    if (timelineFilters.charge !== 'all') {
+      if (!ev.charges || !ev.charges.includes(timelineFilters.charge)) return false;
+    }
+    return true;
+  });
+
+  // 상태 표시 갱신
+  if (filtered.length === timelineEvents.length) {
+    statusEl.textContent = `전체 ${timelineEvents.length}개 이벤트 표시 중`;
+  } else {
+    statusEl.textContent = `${timelineEvents.length}개 중 ${filtered.length}개 이벤트 표시 중`;
+  }
+
+  // 결과 없음
+  if (filtered.length === 0) {
+    container.innerHTML = '';
+    container.classList.add('empty');
+    return;
+  }
+  container.classList.remove('empty');
+
+  // 국면별 그룹화
+  const byPhase = {};
+  filtered.forEach(ev => {
+    if (!byPhase[ev.phase]) byPhase[ev.phase] = [];
+    byPhase[ev.phase].push(ev);
+  });
+
+  // 렌더
+  const phaseOrder = ['background', 'warning-phase', 'decision', 'obstruction', 'dispute'];
+  const html = phaseOrder.map(phaseKey => {
+    const events = byPhase[phaseKey];
+    if (!events || events.length === 0) return '';
+    const phase = phaseData[phaseKey];
+
+    // 접힘 상태 결정 (기본값: defaultOpen 기준, 이후 토글시 phaseCollapsedState 우선)
+    let collapsed;
+    if (phaseCollapsedState.hasOwnProperty(phaseKey)) {
+      collapsed = phaseCollapsedState[phaseKey];
+    } else {
+      collapsed = !phase.defaultOpen;
+    }
+
+    const eventsHtml = events.map(ev => renderEventCard(ev)).join('');
+
+    return `
+      <div class="phase-section${collapsed ? ' collapsed' : ''}" data-phase="${phaseKey}">
+        <div class="phase-header" onclick="togglePhase('${phaseKey}')">
+          <span class="phase-num">${phase.num}</span>
+          <span class="phase-title">${phase.title}</span>
+          <span class="phase-range">${phase.range}</span>
+          <span class="phase-count">${events.length}개 이벤트</span>
+          <span class="phase-toggle">▼</span>
+        </div>
+        <div class="phase-events">
+          ${eventsHtml}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  container.innerHTML = html;
+}
+
+function renderEventCard(ev) {
+  const tagClass = ev.tag;
+  const pivotalClass = ev.pivotal ? ' pivotal' : '';
+  const pivotalBadge = ev.pivotal ? '<span class="pivotal-badge">★ 주요 분기점</span>' : '';
+
+  // 증거 칩
+  const evChips = (ev.evidences && ev.evidences.length > 0)
+    ? `<span class="event-evidences">${ev.evidences.map(n => `<span class="evidence-chip ref-ev" data-ev="${n}">증거 ${n}</span>`).join('')}</span>`
+    : '';
+
+  // 태그
+  const tagEl = `<span class="event-tag ${ev.tag}">${tagLabels[ev.tag]}</span>`;
+
+  // 관련 혐의
+  const chargeEls = (ev.charges && ev.charges.length > 0)
+    ? ev.charges.map(c => `<span class="event-charge ${c}" onclick="jumpToDefense('${c}', event)">${chargeLabels[c]}</span>`).join('')
+    : '';
+
+  // 펼침 내용
+  const expandBody = ev.significance
+    ? `
+      <div class="event-expand">
+        <div class="event-expand-section">
+          <span class="event-expand-title">방어상 의미</span>
+          <div class="event-expand-body">${ev.significance}</div>
+        </div>
+        ${(ev.charges && ev.charges.length > 0 && ev.charges.some(c => chargeToDefense[c]))
+          ? `<div class="event-expand-section">
+              <span class="event-expand-title">관련 방어논리</span>
+              ${ev.charges.filter(c => chargeToDefense[c]).map(c =>
+                `<span class="event-jump-link" onclick="jumpToDefense('${c}', event)">→ ${chargeLabels[c]} 1차 방어 상세 보기</span>`
+              ).join(' ')}
+            </div>`
+          : ''
+        }
+      </div>
+    `
+    : '';
+
+  return `
+    <div class="event-card tag-${tagClass}${pivotalClass}" id="${ev.id}" onclick="toggleEvent('${ev.id}', event)">
+      <div class="event-header">
+        <span class="event-date">${ev.date}</span>
+        ${pivotalBadge}
+        <div class="event-title">${ev.title}</div>
+      </div>
+      <div class="event-meta">
+        ${evChips}
+        ${tagEl}
+        ${chargeEls}
+      </div>
+      ${expandBody}
+      ${expandBody ? '<div class="expand-indicator">▼ 자세히 보기</div>' : ''}
+    </div>
+  `;
+}
+
+function toggleEvent(id, e) {
+  // 혐의 태그나 jump link 클릭시는 토글 안함
+  if (e && e.target.closest('.event-charge, .event-jump-link, .evidence-chip')) return;
+  const card = document.getElementById(id);
+  if (!card) return;
+  card.classList.toggle('expanded');
+}
+
+function togglePhase(phaseKey) {
+  const current = phaseCollapsedState.hasOwnProperty(phaseKey)
+    ? phaseCollapsedState[phaseKey]
+    : !phaseData[phaseKey].defaultOpen;
+  phaseCollapsedState[phaseKey] = !current;
+  const section = document.querySelector(`.phase-section[data-phase="${phaseKey}"]`);
+  if (section) section.classList.toggle('collapsed');
+}
+
+function expandAllPhases() {
+  Object.keys(phaseData).forEach(k => phaseCollapsedState[k] = false);
+  document.querySelectorAll('.phase-section').forEach(s => s.classList.remove('collapsed'));
+}
+
+function collapseAllPhases() {
+  Object.keys(phaseData).forEach(k => phaseCollapsedState[k] = true);
+  document.querySelectorAll('.phase-section').forEach(s => s.classList.add('collapsed'));
+}
+
+function applyFilter(type, value) {
+  timelineFilters[type] = value;
+  // 버튼 active 상태 갱신
+  document.querySelectorAll(`.filter-buttons[data-filter-type="${type}"] .filter-btn`).forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.filter === value);
+  });
+  renderTimeline();
+}
+
+function jumpToDefense(chargeKey, e) {
+  if (e) e.stopPropagation();
+  const defenseKey = chargeToDefense[chargeKey];
+  if (!defenseKey) {
+    // 고소동기 등은 사건 일지로만 처리. 변영성 동기 탄핵 증거 강조는 증거 커버리지 섹션 스크롤
+    const target = document.getElementById('sec-evidence');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  // 방어논리 셀 클릭 시뮬레이션
+  const target = document.getElementById('sec-defense');
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(() => {
+    const cell = document.querySelector(`.matrix .cell[data-defense="${defenseKey}"]`);
+    if (cell) cell.click();
+  }, 500);
+}
+
 /* ============================================================
    인터랙션 핸들러
 ============================================================ */
@@ -2211,8 +3111,21 @@ document.addEventListener('DOMContentLoaded', () => {
   renderChecklist('urgent-checklist', urgentTasks, true);
   renderChecklist('preparation-checklist', preparationTasks, false);
   renderQA();
+  renderTimeline();
   updateProgress();
   updateActiveNav();
+
+  // 필터 버튼 이벤트 리스너 바인딩
+  document.querySelectorAll('.filter-buttons .filter-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const group = btn.closest('.filter-buttons');
+      if (!group) return;
+      const type = group.dataset.filterType;
+      const value = btn.dataset.filter;
+      if (type && value) applyFilter(type, value);
+    });
+  });
 });
 </script>
 </body>
